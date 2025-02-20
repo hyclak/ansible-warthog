@@ -1,0 +1,11 @@
+[Unit]
+Description=Warthog Node
+
+[Service]
+WorkingDirectory={{ warthog_node__warthog_dir }}
+Restart=always
+ExecStart={{ warthog_node__warthog_dir }}/wart-node-linux {% if warthog_node__public_node | bool %}--enable-public{% else %} {% endif %}
+
+
+[Install]
+WantedBy=multi-user.target

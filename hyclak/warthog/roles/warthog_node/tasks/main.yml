@@ -1,0 +1,38 @@
+---
+- name: Ensure warthog user exists
+  ansible.builtin.user:
+    name: "{{ warthog_node__warthog_user['name'] }}"
+    uid: "{{ warthog_node__warthog_user['uid'] }}"
+    comment: Warthog Node
+
+- name: Ensure warthog directory exists in /opt
+  ansible.builtin.file:
+    path: "{{ warthog_node__warthog_dir }}"
+    state: directory
+    owner: "{{ warthog_node__warthog_user['name'] }}"
+    mode: '0755'
+
+- name: Ensure warthog binary is installed
+  ansible.builtin.get_url:
+    url: "{{ warthog_node__git_release_url }}/{{ warthog_node__node_version }}/wart-node-linux"
+    dest: "{{ warthog_node__warthog_dir }}"
+    owner: "{{ warthog_node__warthog_user['name'] }}"
+    mode: '0755'
+  notify: Restart Warthog Node Service
+
+- name: Ensure warthog unit file is installed
+  ansible.builtin.template:
+    src: warthog-node.service.j2
+    dest: /etc/systemd/system/warthog-node.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Reload systemd Daemon
+    - Restart Warthog Node Service
+
+- name: Ensure warthog-node service is running and enabled
+  ansible.builtin.systemd_service:
+    name: warthog-node.service
+    state: started
+    enabled: true

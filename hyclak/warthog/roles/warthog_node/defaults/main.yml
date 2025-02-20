@@ -1,0 +1,8 @@
+---
+warthog_node__git_release_url: https://github.com/warthog-network/Warthog/releases/download
+warthog_node__node_version: 0.8.6
+warthog_node__public_node: true
+warthog_node__warthog_dir: /opt/warthog
+warthog_node__warthog_user:
+  name: warthog
+  uid: 923

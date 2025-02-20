@@ -1,0 +1,9 @@
+---
+- name: Reload systemd Daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart Warthog Node Service
+  ansible.builtin.systemd_service:
+    name: warthog-node.service
+    state: restarted
