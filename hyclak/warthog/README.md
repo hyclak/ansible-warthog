@@ -1,4 +1,4 @@
-# Ansible Collection - hyclak.warthog_node
+# Ansible Collection - hyclak.warthog
 
 This collection includes Ansible roles and content to manage [Warthog Nodes](https://warthog.network/).
 
